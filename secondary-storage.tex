@@ -116,24 +116,24 @@ Solid State Drives pose many difficult challenges to both their manufacturers an
 
 NAND flash has two major usage limits: Block erasure and Limited write cycles or \emph{Memory wear}.
 
-%% block erasure
+\subsubsection{Block Erasure}
 Because of the higher current which is necessary to release the trapped charge in a flash memory cell compared to charging a cell, this process is done in blocks of cells, called \emph{Erase Blocks}. Most current Solid State Disks use blocks of 64 pages or more. %TODO citation needed!
 This means that to write to a page which was previously written and subsequently marked as unused, either all pages on the same erase block have to be marked unused too, or currently in use pages have to be copied to another block. It is not until this has been done that the block can be erased. This process is called \emph{Garbage Collection}.
 
-% Write Cycles
+\subsubsection{Limited Write Cycles}
 When writing to a flash cell, charge is captured in it, similiar to a capacitor. %TODO similiar? the same? hmm.
 However, when erasing it, not all charge is released. Some electrons get trapped in the gate, which leads to a point where the potential of an uncharged cell is nondistinguishable from that of a charged cell. This phenomenon, known as \emph{Memory wear}, occurs earlier in multi level cells, since the cell is unusable as soon as the zeroth level is indistinguishable from the first level.
 Current SLC NAND flash cells have lifetimes from 100 thousand program/erase (\emph{P/E}) cycles to one million before becoming useless, while multi level or triple level cells have 3 thousand to ten thousand cycles.
 
-% Read Disturb
+\subsubsection{Read Disturb}
 
 \subsection{Software Challenges}
 
-% Garbage Collection
+\subsubsection{Garbage Collection}
 
-% Random Writes
+\subsubsection{Random Writes}
 
-% TRIM
+\subsubsection{TRIM}
 
 \section{Parallel access mechanisms}
 
