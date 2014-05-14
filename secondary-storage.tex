@@ -110,6 +110,23 @@ This report contains a summary of developments in computer secondary storage, pa
 
 \section{SSD challenges}
 
+Solid State Drives pose many difficult challenges to both their manufacturers and users. Despite the superior theoretical access time and read/write bandwidth of NAND flash, the inherent limitations of NAND flash memory make development and use of SSD much more difficult and completely different to regular hard disk drives.
+
+\subsection{Hardware Limits}
+
+NAND flash has two major usage limits: Block erasure and Limited write cycles or \emph{Memory wear}.
+
+%% block erasure
+Because of the higher current which is necessary to release the trapped charge in a flash memory cell compared to charging a cell, this process is done in blocks of cells, called \emph{Erase Blocks}. Most current Solid State Disks use blocks of 64 pages or more. %TODO citation needed!
+This means that to write to a page which was previously written and subsequently marked as unused, either all pages on the same erase block have to be marked unused too, or currently in use pages have to be copied to another block. It is not until this has been done that the block can be erased. This process is called \emph{Garbage Collection}.
+
+%% write cycles
+When writing to a flash cell, charge is captured in it, similiar to a capacitor. %TODO similiar? the same? hmm.
+However, when erasing it, not all charge is released. Some electrons get trapped in the gate, which leads to a point where the potential of an uncharged cell is nondistinguishable from that of a charged cell. This phenomenon, known as \emph{Memory wear}, occurs earlier in multi level cells, since the cell is unusable as soon as the zeroth level is indistinguishable from the first level.
+Current SLC NAND flash cells have lifetimes from 100 thousand program/erase (\emph{P/E}) cycles to one million before becoming useless, while multi level or triple level cells have 3 thousand to ten thousand cycles.
+
+\subsection{Software Challenges}
+
 \section{Parallel access mechanisms}
 
 \subsection{B-Tree Layer for Flash Memory Storage Systems}
@@ -126,11 +143,15 @@ This report contains a summary of developments in computer secondary storage, pa
 
 \cite{kang2012flash}
 
+
+% also possible as current research: SSD self-healing through thermal annealing
 \section{Current Research: Phase Change Memory (\secit{PRAM})}
 
 \section{Future Trends}
 
 
+
+\balancecolumns
 %% examples begin
 
 \begin{table*}
