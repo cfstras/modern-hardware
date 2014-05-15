@@ -114,7 +114,7 @@ Solid State Drives pose many difficult challenges to both their manufacturers an
 
 \subsection{Hardware Limits}
 
-NAND flash has two major usage limits: Block erasure and Limited write cycles or \emph{Memory wear}.
+NAND flash has two major limits: Block erasure and write cycles (\emph{Memory wear}).
 
 \subsubsection{Block Erasure}
 Because of the higher current which is necessary to release the trapped charge in a flash memory cell compared to charging a cell, this process is done in blocks of cells, called \emph{Erase Blocks}. Most current Solid State Disks use blocks of 64 pages or more. %TODO citation needed!
@@ -126,10 +126,20 @@ However, when erasing it, not all charge is released. Some electrons get trapped
 Current SLC NAND flash cells have lifetimes from 100 thousand program/erase (\emph{P/E}) cycles to one million before becoming useless, while multi level or triple level cells have 3 thousand to ten thousand cycles.
 
 \subsubsection{Read Disturb}
+Another phenomenon in NAND flash is called \emph{Read Disturb}. When a cell is accessed many times without being erased, trapped charge can build up in nearby cells, causing them to flip their status if they were uncharged before. %TODO sicher, dass sich etwas aufbaut und nichts abbaut?
+This happens after about one million reads without erase in single level cells and after 100 thousand reads for multi level cells.
 
-\subsection{Software Challenges}
+To prevent read disturb from corrupting data, SSD controllers keep count of how many times a page was read since the last erase cycle. When a predefined critical read limit is approached, the data is moved or re-programmed.
+
+\subsection{Controller Firmware Challenges}
+SSD controllers have to do a lot of bookkeeping to prevent the underlying flash memory from corrupting data or deteriorating. Errors or oversights in controller firmware programming can lead to drastically reduced performance, data loss or silent data corruption.
 
 \subsubsection{Garbage Collection}
+
+\subsubsection{Write Amplification}
+Summing up these techniques used by the controller, write accesses to the device --- or in the case of Read Disturb mitigation read accesses,too --- lead to more data being written than requested by the operating system.  
+
+\subsection{Software Challenges}
 
 \subsubsection{Random Writes}
 
