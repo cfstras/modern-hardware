@@ -28,6 +28,9 @@
 
 \documentclass{acm_proc_article-sp}
 
+\usepackage[breaklinks,colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
+%\usepackage{url}
+
 \begin{document}
 
 \title{Computer Secondary Storage}
@@ -113,19 +116,21 @@ This report contains a summary of developments in computer secondary storage, pa
 Solid State Drives pose many difficult challenges to both their manufacturers and users. Despite the superior theoretical access time and read/write bandwidth of NAND flash, the inherent limitations of NAND flash memory make development and use of SSD much more difficult and completely different to regular hard disk drives.
 
 \subsection{Hardware Limits}
+NAND flash has two major limits: Block erasure and write cycles (\emph{Memory wear}). Other limitations include Bit Corruption and Read Disturb
 
-NAND flash has two major limits: Block erasure and write cycles (\emph{Memory wear}).
-
-\subsubsection{Block Erasure}
-Because of the higher current which is necessary to release the trapped charge in a flash memory cell compared to charging a cell, this process is done in blocks of cells, called \emph{Erase Blocks}. Most current Solid State Disks use blocks of 64 pages or more. %TODO citation needed!
+\subsubsection*{Block Erasure}
+Because of the higher current which is necessary to release the trapped charge in a flash memory cell compared to charging a cell, this process is done in blocks of cells, called \emph{Erase Blocks}. Most current Solid State Disks use blocks of 256 pages or more \cite{codecapsule2014coding}.
 This means that to write to a page which was previously written and subsequently marked as unused, either all pages on the same erase block have to be marked unused too, or currently in use pages have to be copied to another block. It is not until this has been done that the block can be erased. This process is called \emph{Garbage Collection}.
 
-\subsubsection{Limited Write Cycles}
+\subsubsection*{Limited Write Cycles}
 When writing to a flash cell, charge is captured in it, similiar to a capacitor. %TODO similiar? the same? hmm.
 However, when erasing it, not all charge is released. Some electrons get trapped in the gate, which leads to a point where the potential of an uncharged cell is nondistinguishable from that of a charged cell. This phenomenon, known as \emph{Memory wear}, occurs earlier in multi level cells, since the cell is unusable as soon as the zeroth level is indistinguishable from the first level.
 Current SLC NAND flash cells have lifetimes from 100 thousand program/erase (\emph{P/E}) cycles to one million before becoming useless, while multi level or triple level cells have 3 thousand to ten thousand cycles.
 
-\subsubsection{Read Disturb}
+\subsubsection*{Bit Corruption}
+Raw flash memory is prone to random bit errors, because of charge leaking in and out of storage cells. Error correcting codes (\emph{ECC}), as well as error detecting codes (such as Cyclic Redundancy Check, \emph{CRC}) are used to find and possibly correct errors without silently corrupting data.
+
+\subsubsection*{Read Disturb}
 Another phenomenon in NAND flash is called \emph{Read Disturb}. When a cell is accessed many times without being erased, trapped charge can build up in nearby cells, causing them to flip their status if they were uncharged before. %TODO sicher, dass sich etwas aufbaut und nichts abbaut?
 This happens after about one million reads without erase in single level cells and after 100 thousand reads for multi level cells.
 
@@ -134,16 +139,21 @@ To prevent read disturb from corrupting data, SSD controllers keep count of how 
 \subsection{Controller Firmware Challenges}
 SSD controllers have to do a lot of bookkeeping to prevent the underlying flash memory from corrupting data or deteriorating. Errors or oversights in controller firmware programming can lead to drastically reduced performance, data loss or silent data corruption.
 
-\subsubsection{Garbage Collection}
+\subsubsection*{Garbage Collection}
+In order to write data to flash memory, free pages have to be available. SSD controllers use Over-Provisioning (\emph{OP}) to keep the number of unwritten pages high during burst writes, but if more data is to be written than free pages are available, or when invalidated pages need to be reclaimed, garbage collection is necessary. In this process, the controller copies still-valid pages out of blocks containing many invalid pages, only then the whole block can be erased. As the number of invalid or free pages --- to the operating system these are known as \emph{free} space --- decrease, more garbage collection and copying of pages in use has to be done in order to ensure available pages on write requests.
 
-\subsubsection{Write Amplification}
-Summing up these techniques used by the controller, write accesses to the device --- or in the case of Read Disturb mitigation read accesses,too --- lead to more data being written than requested by the operating system.  
+\subsubsection*{Wear Leveling}
+
+
+\subsubsection*{Write Amplification}
+Summing up these techniques used by the controller, write accesses to the device --- or in the case of Read Disturb mitigation read accesses, too --- lead to more data being written than requested by the operating system. % small writes
 
 \subsection{Software Challenges}
+Even though SSD manufacturers go to great lengths to ensure optimal performance and data integrity
 
-\subsubsection{Random Writes}
+\subsubsection*{Random Writes}
 
-\subsubsection{TRIM}
+\subsubsection*{TRIM}
 
 \section{Parallel access mechanisms}
 
