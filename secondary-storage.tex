@@ -149,9 +149,10 @@ In order to write data to flash memory, free pages have to be available. SSD con
 Summing up these techniques used by the controller, write accesses to the device --- or in the case of Read Disturb mitigation read accesses, too --- lead to more data being written than requested by the operating system. % small writes
 
 \subsection{Software Challenges}
-Even though SSD manufacturers go to great lengths to ensure optimal performance and data integrity
+Even though SSD manufacturers go to great lengths to ensure optimal performance and data integrity, there are still considerations necessary for system architects and developers when building software or systems using SSDs. Blindly following current usage patterns established for rotating media will lead to bad performance, possibly worse than with hard drives, sudden performance drop or high device failure rate.
 
 \subsubsection*{Random Writes}
+Even though SSDs have no mechanical parts, sequential writes will still be faster than small writes. Applications have to be careful to try and write in as big blocks as possible, since the smallest written unit will always be the page size (currently 8 to 16 KiB). Small, random writes, such as those produced by a conventional Relational Database Management System (\emph{RDBMS}) like PostgreSQL or MySQL, will cause rapid allocation of many pages, which then need to be garbage collected. As soon as the SSD controller runs out of overprovisioned pages, garbage collection will be necessary and drastically slow down the device. The effective Write Amplification will be very high (depending on the write sizes and their ratio to the page and block sizes), also leading to faster memory degradation and therefore a high disk failure rate.
 
 \subsubsection*{TRIM}
 
@@ -176,7 +177,7 @@ Even though SSD manufacturers go to great lengths to ensure optimal performance 
 \section{Current Research: Phase Change Memory (\secit{PRAM})}
 
 \section{Future Trends}
-
+% also note: PCIe SSDs have no hotswap mechanism! terrible for servers!
 
 
 \balancecolumns
