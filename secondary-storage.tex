@@ -139,13 +139,17 @@ To prevent read disturb from corrupting data, SSD controllers keep count of how 
 SSD controllers have to do a lot of bookkeeping to prevent the underlying flash memory from corrupting data or deteriorating. Errors or oversights in controller firmware programming can lead to drastically reduced performance, data loss or silent data corruption.
 
 \subsubsection*{Garbage Collection}
-In order to write data to flash memory, free pages have to be available. SSD controllers use Over-Provisioning (\emph{OP}) to keep the number of unwritten pages high during burst writes, but if more data is to be written than free pages are available, or when invalidated pages need to be reclaimed, garbage collection is necessary. In this process, the controller copies still-valid pages out of blocks containing many invalid pages, only then the whole block can be erased. As the number of invalid or free pages --- to the operating system these are known as \emph{free} space --- decrease, more garbage collection and copying of pages in use has to be done in order to ensure available pages on write requests.
+In order to write data to flash memory, free pages have to be available. SSD controllers use Over-Provisioning (\emph{OP}) to keep the number of unwritten pages high during burst writes, but if more data is to be written than free pages are available, or when invalidated pages need to be reclaimed, garbage collection is necessary. In this process, the controller copies still-valid pages out of blocks containing many invalid pages, only then the whole block can be erased. As the number of invalidated or free pages decreases --- to the operating system these are known as \emph{free} space --- more garbage collection and copying of pages in use has to be done in order to ensure available pages on write requests.
 
 \subsubsection*{Wear Leveling}
-
+Flash cells degrade when being written. When one section of the disk is written many times, e.g. a swap file or a simple counter, the page containing that section can wear out very quickly -- limiting the amount of overprovisioning or, in worse cases, reducing the effective size of the disk before it is at the end of its life. To prevent this from happening, the controller keeps count on page writes and re-maps heavily written pages to other pages regularly.
 
 \subsubsection*{Write Amplification}
-Summing up these techniques used by the controller, write accesses to the device --- or in the case of Read Disturb mitigation read accesses, too --- lead to more data being written than requested by the operating system. % small writes
+Summing up these techniques used by the controller, write accesses to the device can lead to more data being written than requested by the operating system. These include garbage collection, wear leveling, and most prominent, small and/or random writes.
+Also, in the case of read disturb mitigation, even read accesses can cause writes to the disks.
+In optimal situations, write amplification can be as low as a factor of $1.1\times$, while in worst-case conditions, the can go up to $10\times$ or $20\times$.
+\\
+Some manufacturers decrease this benchmark value by compressing and deduplicating data on-the-fly before writing it to disk, but this will only show effects for compressable data and only increase overhead for data not easily compressible.
 
 \subsection{Software Challenges}
 Even though SSD manufacturers go to great lengths to ensure optimal performance and data integrity, there are still considerations necessary for system architects and developers when building software or systems using SSDs. Blindly following current usage patterns established for rotating media will lead to bad performance, possibly worse than with hard drives, sudden performance drop or high device failure rate.
