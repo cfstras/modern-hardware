@@ -133,7 +133,7 @@ Raw flash memory is prone to random bit errors, because of charge leaking in and
 \subsubsection*{Read Disturb}
 Another phenomenon in NAND flash is called \emph{Read Disturb}. When a cell is accessed many times without being erased, trapped charge can build up in nearby cells, causing them to flip their status if they were uncharged before. %TODO sicher, dass sich etwas aufbaut und nichts abbaut?
 This happens after about one million reads without erase in single level cells and after 100 thousand reads for multi level cells.
-
+\\
 To prevent read disturb from corrupting data, SSD controllers keep count of how many times a page was read since the last erase cycle. When a predefined critical read limit is approached, the data is moved or re-programmed.
 
 \subsection{Controller Firmware Challenges}
@@ -155,6 +155,11 @@ Even though SSD manufacturers go to great lengths to ensure optimal performance 
 Even though SSDs have no mechanical parts, sequential writes will still be faster than small writes. Applications have to be careful to try and write in as big blocks as possible, since the smallest written unit will always be the page size (currently 8 to 16 KiB). Small, random writes, such as those produced by a conventional Relational Database Management System (\emph{RDBMS}) like PostgreSQL or MySQL, will cause rapid allocation of many pages, which then need to be garbage collected. As soon as the SSD controller runs out of overprovisioned pages, garbage collection will be necessary and drastically slow down the device. The effective Write Amplification will be very high (depending on the write sizes and their ratio to the page and block sizes), also leading to faster memory degradation and therefore a high disk failure rate.
 
 \subsubsection*{TRIM}
+\emph{TRIM} is an ATA command used to mark unused pages. Conventional spinning hard drives have and need no concept of used or unused storage, since all they do is write and read. With SSDs, the controller needs to know what data is actually valid, otherwise it will do bookkeeping for data no longer referenced by the file system. Also, this storage space cannot be used by the controller to perform garbage collection, wear leveling or other optimization techniques and consequently slows down operation.
+\\
+To resolve this, the TRIM command has been introduced to the ATA specification to allow the operating system or file system to inform the drive when files are being unlinked. The SSD controller can then reclaim the now free space and use it at will.
+\\
+The lack of TRIM support was an issue when first introducing SSDs, it has however been implemented in all major operating systems since 2011. Still, some combinations of operating and file systems (for example NTFS-3g on Linux or Android before 4.3) might lack TRIM support and therefore cannot take full advantage of SSD speeds.
 
 \section{Parallel access mechanisms}
 
