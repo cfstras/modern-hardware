@@ -118,10 +118,6 @@ While  there were multiple manufacturers on the HDD market for years, today only
 The origins of SSDs used magnetic core memory and card capacitor read-only store (CCROS). They were built in the 1950s. In the 1970s and 1980s SSD were used in supercomputers only. The first flash-based SSD were developed by MSystems in 1995, but it was so expensive, that it were only used for military reasons and other less price-sensitive sectors. In 1999 BiTMICRO announced the first SSD in 3.5" form factor. The first SSD for laptops in 2.5" and 1.8" form factors were developed by Samsung in 2006 and costz about 600 US-dollar. This is only an eighth of the price of previous SSDs. This wasn't the breakthrough for SSDs yet, but Samsung could gain 45% of market share. Only one year later Fusion-io announced the first PCIe-baes SSD which reached 100,000 IOPS (as comparisson: today HDD reaches up to 125 IOPS). The second generation of SSDs for consumers were the first generation that used MLC instead of SLC flash memory chips. As we have seen this decreased the price for SSDs, but the performancer was worse than SLC-based SSD's performance. In 2009 SSDs used improved MLC flash memory chips which had even better performance than some SLC chips. The term 'Enterprise flash drives (EFDs)' were introduced in 2008, but it became never a standard, so every SSD-manufacturer can name their SSDs as EFDs.
 
 \section{Advantages and disadvantages of SSDs compared to HDDs}
-As you can see in Table 1 SSDs have a very short access time, high data transfer rate and high IOPS. Because there are no moving parts, it is completely silent and very robust. This includes properties like shock resistance, temperature tolerance, dimensions, weight, etc. and leads to a very good usability in mobile computers. As we have seen when talking about SSD controllers, the speed can increase with a higher rate of parallelizability. The speed of SSDs can be so high, that even the newest and most advanced interfaces for SSDs and HDDs are too slow. So modern SSDs use interfaces like mSATA, PCI-Express and FibreChannel. Because of the small dimensions new form factory like mSATA, PCIe Mini Card and M.2 were developed too.
-\\
-But there are also some negative points about SSDs. SSDs are expensive; especially the price-per-GB compared to HDDs. Another problem is the limited time of write cycles for every NAND-cell. Later we will show you the disadvantages of Write Amplification and its complex countermeasures.
-\\
 \begin{table*}
 \centering
 \caption{Comparison of SSDs and HDDs}
@@ -136,6 +132,9 @@ But there are also some negative points about SSDs. SSDs are expensive; especial
 \texttt{Price}& 0.45 US\$/GB & 0.05 - 0.10 US\$/GB\\ \hline\end{tabular}
 
 \end{table*}
+As you can see in Table 1 SSDs have a very short access time, high data transfer rate and high IOPS. Because there are no moving parts, it is completely silent and very robust. This includes properties like shock resistance, temperature tolerance, dimensions, weight, etc. and leads to a very good usability in mobile computers. As we have seen when talking about SSD controllers, the speed can increase with a higher rate of parallelizability. The speed of SSDs can be so high, that even the newest and most advanced interfaces for SSDs and HDDs are too slow. So modern SSDs use interfaces like mSATA, PCI-Express and FibreChannel. Because of the small dimensions new form factory like mSATA, PCIe Mini Card and M.2 were developed too.
+\\
+But there are also some negative points about SSDs. SSDs are expensive; especially the price-per-GB compared to HDDs. Another problem is the limited time of write cycles for every NAND-cell. Later we will show you the disadvantages of Write Amplification and its complex countermeasures.
 
 \section{SSD challenges}
 Solid State Drives pose many difficult challenges to both their manufacturers and users. Despite the superior theoretical access time and read/write bandwidth of NAND flash, the inherent limitations of NAND flash memory make development and use of SSD difficult and completely different to regular hard disk drives.
