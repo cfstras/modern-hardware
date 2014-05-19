@@ -181,17 +181,20 @@ The lack of TRIM support was an issue when first introducing SSDs, it has howeve
 Block-oriented access over flash causes redundant writes. Redundant writes are bad for SSDs because they lower the overall performance of SSDs and decreases the reliability of flash memory. So mitigation is necessary when using SSDs. In this section we will show you some of the techniques to avoid redundant writes.
 
 \subsection{B-Tree Layer for Flash Memory Storage Systems}
-
+This is an efﬁcient implementation of B-tree index structures over the flash translation layer (\emph{FTL}) and provides ﬁle systems functions to create and maintain B-tree index structures. Because it is done directly over the FTL, no modiﬁcations to existing application systems are needed. The advantages of using a B-tree layer are reduced overhead of flash memory management, reduced energy dissipation and reduced average response time of record insertions and deletions. You can clrearly say that it improves the overall system performance. %TODO: Check for plagiarism problems
 
 \cite{wu2007efficient}
 
 \subsection{Fractal Prefetching B$^{+}$-Trees}
+An Fractal Prefetching B$^{+}$-Tree is a single index structure that can be viewed at two different granularities: at a coarse granularity, it contains disk-optimized nodes that are roughly the size of a disk page, and at a fine granularity, it contains cache-optimized nodes that are roughly the size of a cache line. This leads to an optimazation of cache and I/O operations. %TODO: Check for plagiarism problems and go deeper in detail
 
 \cite{chen2002fractal}
 
 \subsection{?} % microsoft case study?
+%TODO: Sollen wir das aufnehmen oder weglassen?
 
 \subsection{Flash as Cache Extension (\subsecit{FaCE})}
+FaCE utilizes ﬂash memory as an extension to a DRAM buffer for a recoverable database. It caches data pages in ﬂash memory on exit from the DRAM buffer. So this is a low-overhead cache method.Flash cache is capable of sustaining high hit rates without incurring excessive run-time overheads. This technique is more cost efficient than increasing the size of DRAM buffers. It also allows a more sustainable I/O performance for higher transaction throughput. Another advantage is the minimized overhead in recovery scenarios and an accelerated system restart after failure. %TODO: Check for plagiarism problems
 
 \cite{kang2012flash}
 
