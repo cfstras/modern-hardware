@@ -122,7 +122,7 @@ As you can see in Table 1 SSDs have a very short access time, high data transfer
 \\
 But there are also some negative points about SSDs. SSDs are expensive; especially the price-per-GB compared to HDDs. Another problem is the limited time of write cycles for every NAND-cell. Later we will show you the disadvantages of Write Amplification and its complex countermeasures.
 \\
-TODO: Insert Table 1 here
+%TODO: Insert Table 1 here
 
 \section{SSD challenges}
 Solid State Drives pose many difficult challenges to both their manufacturers and users. Despite the superior theoretical access time and read/write bandwidth of NAND flash, the inherent limitations of NAND flash memory make development and use of SSD difficult and completely different to regular hard disk drives.
@@ -178,8 +178,10 @@ To resolve this, the TRIM command has been introduced to the ATA specification t
 The lack of TRIM support was an issue when first introducing SSDs, it has however been implemented in all major operating systems since 2011. Still, some combinations of operating and file systems (for example NTFS-3g on Linux or Android before 4.3 \cite{androidtrim}) might lack TRIM support and therefore cannot take full advantage of SSD speeds.
 
 \section{Parallel access mechanisms}
+Block-oriented access over flash causes redundant writes. Redundant writes are bad for SSDs because they lower the overall performance of SSDs and decreases the reliability of flash memory. So mitigation is necessary when using SSDs. In this section we will show you some of the techniques to avoid redundant writes.
 
 \subsection{B-Tree Layer for Flash Memory Storage Systems}
+
 
 \cite{wu2007efficient}
 
