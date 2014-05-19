@@ -1,29 +1,10 @@
-% THIS IS SIGPROC-SP.TEX - VERSION 3.1
-% WORKS WITH V3.2SP OF ACM_PROC_ARTICLE-SP.CLS
-% APRIL 2009
-%
-% It is an example file showing how to use the 'acm_proc_article-sp.cls' V3.2SP
-% LaTeX2e document class file for Conference Proceedings submissions.
-% ----------------------------------------------------------------------------------------------------------------
-% This .tex file (and associated .cls V3.2SP) *DOES NOT* produce:
-%       1) The Permission Statement
-%       2) The Conference (location) Info information
-%       3) The Copyright Line with ACM data
-%       4) Page numbering
-% ---------------------------------------------------------------------------------------------------------------
+
 % It is an example which *does* use the .bib file (from which the .bbl file
 % is produced).
 % REMEMBER HOWEVER: After having produced the .bbl file,
 % and prior to final submission,
 % you need to 'insert'  your .bbl file into your source .tex file so as to provide
 % ONE 'self-contained' source file.
-%
-% Questions regarding SIGS should be sent to
-% Adrienne Griscti ---> griscti@acm.org
-%
-% Questions/suggestions regarding the guidelines, .tex and .cls files, etc. to
-% Gerald Murray ---> murray@hq.acm.org
-%
 % For tracking purposes - this is V3.1SP - APRIL 2009
 
 \documentclass{acm_proc_article-sp}
@@ -40,51 +21,13 @@
 
 \title{Computer Secondary Storage}
 \subtitle{Seminar: Use of Modern Hardware in Big Data Processing}
-%
-% You need the command \numberofauthors to handle the 'placement
-% and alignment' of the authors beneath the title.
-%
-% For aesthetic reasons, we recommend 'three authors at a time'
-% i.e. three 'name/affiliation blocks' be placed beneath the title.
-%
-% NOTE: You are NOT restricted in how many 'rows' of
-% "name/affiliations" may appear. We just ask that you restrict
-% the number of 'columns' to three.
-%
-% Because of the available 'opening page real-estate'
-% we ask you to refrain from putting more than six authors
-% (two rows with three columns) beneath the article title.
-% More than six makes the first-page appear very cluttered indeed.
-%
-% Use the \alignauthor commands to handle the names
-% and affiliations for an 'aesthetic maximum' of six authors.
-% Add names, affiliations, addresses for
-% the seventh etc. author(s) as the argument for the
-% \additionalauthors command.
-% These 'additional authors' will be output/set for you
-% without further effort on your part as the last section in
-% the body of your article BEFORE References or any Appendices.
 
-\numberofauthors{1} %  in this sample file, there are a *total*
-% of EIGHT authors. SIX appear on the 'first-page' (for formatting
-% reasons) and the remaining two appear in the \additionalauthors section.
-%
+\numberofauthors{1}
 \author{
-% You can go ahead and credit any number of authors here,
-% e.g. one 'row of three' or two rows (consisting of one row of three
-% and a second row of one, two or three).
-%
-% The command \alignauthor (no curly braces needed) should
-% precede each author name, affiliation/snail-mail address and
-% e-mail address. Additionally, tag each line of
-% affiliation/address with \affaddr, and tag the
-% e-mail address with \email.
-%
-% 1st. author
 \alignauthor
 Sascha K{\"o}nigsberg, Claus Strasburger\\
        \affaddr{Technische Universit{\"a}t M{\"u}nchen}\\
-       \email{\{sascha.koenigsberg, c.strasburger\}@tum.de}
+       \email{\texttt{\{sascha.koenigsberg, c.strasburger\}@tum.de}}
 }
 
 \date{20 May 2014}
@@ -136,7 +79,7 @@ The origins of SSDs used magnetic core memory and card capacitor read-only store
 
 \section{Advantages and disadvantages of SSDs compared to HDDs}
 
-As you can see in table 1, SSDs have very short access time, high data transfer rate and high I/O operations per second (\emph{IOPS}). Because there are no moving parts, it is completely silent and very robust. This includes properties like shock resistance, temperature tolerance, dimensions, weight, etc. and leads to a very good usability in mobile computers and more reliability in server environment, since rack mounts are prone to vibration. As we have seen when talking about SSD controllers, the speed can increase with a higher rate of parallelizability. The speed of SSDs can be so high that even the newest and most advanced interfaces for SSDs and HDDs are too slow. So modern SSDs use interfaces like \emph{mSATA}, \emph{PCI-Express} and \emph{FibreChannel}. Because of the small dimensions new form factory like \emph{mSATA}, \emph{PCIe Mini Card} and \emph{M.2} were developed too.
+As displayed in table 1, SSDs have very short access time, high data transfer rate and high I/O operations per second (\emph{IOPS}). Because there are no moving parts, it is completely silent and very robust. This includes properties like shock resistance, temperature tolerance, dimensions, weight, etc. and leads to a very good usability in mobile computers and more reliability in server environment, since rack mounts are prone to vibration. As we have seen when talking about SSD controllers, the speed can increase with a higher rate of parallelizability. The speed of SSDs can be so high that even the newest and most advanced interfaces for SSDs and HDDs are too slow. So modern SSDs use interfaces like \emph{mSATA}, \emph{PCI-Express} and \emph{FibreChannel}. Because of the small dimensions new form factory like \emph{mSATA}, \emph{PCIe Mini Card} and \emph{M.2} were developed too.
 \\
 But there are also some negative points about SSDs. SSDs are expensive; especially the price-per-TB compared to HDDs. Another problem is the limited time of write cycles for every NAND-cell. Later we will show you the disadvantages of Write Amplification and its complex countermeasures.
 
@@ -225,19 +168,14 @@ However, as of 2014, PRAM has not yet been available for consumers and prices ha
 Current SSD prices are still high --- while, as of 2014, 1 TiB of enterprise SSD storage costs around \EUR{1,500} to \EUR{2,000} and a server with 1 TiB of main memory will cost from \EUR{10,000} to \EUR{15,000}, there is also a speed improvement of one order of magnitude in both access time and read/write speed. In a production environment, instead of extending the cache layer hierarchy by an SSD layer, the consideration of increasing main memory first is important, especially in cases where the working set could fit in main memory. It could be stated that maximizing main memory before investing in the necessary software to properly use SSD storage is preferable in most cases.
 %TODO
 
-%
-% The following two commands are all you need in the
-% initial runs of your .tex file to
-% produce the bibliography for the citations in your paper.
+
+
 \bibliographystyle{abbrv}
-\bibliography{secondary-storage}  % sigproc.bib is the name of the Bibliography in this case
-% You must have a proper ".bib" file
+\bibliography{secondary-storage}
 %  and remember to run:
 % latex bibtex latex latex
 % to resolve all references
-%
-% ACM needs 'a single self-contained file'!
-%
+
 
 \balancecolumns
 \end{document}
