@@ -211,6 +211,11 @@ FaCE \cite{kang2012flash} utilizes flash memory as an extension to a DRAM buffer
 \section{Current Research}
 
 \subsection{Phase Change Memory (\secit{PRAM})}
+This type of non-volatile memory uses the unique chemical behaviour of chalcogenide glass: by applying a voltage to amorphous chalcogenide glass, heating up to the crystallization temperature for around 100 ns, the glass crystallizes. In this form, the resistance over the material is much lower. By heating it to a temperature above the crystallization temperature for 50 ns and instantly letting it cool, it returns back to the amorphous state with higher resistance.
+\\
+Phase-Change Memory therefore does not have the need for an erase step before writing, each cell can invidually be set or reset at will. This allows for simpler controllers, not requiring many of the complex optimizations like garbage collection done in flash transaction layers, while still having the benefits of a non-mechanical state memory. Also, degradation is much lower: cells last for up to 100 million set/reset cycles, instead of 100 thousand program/erase cycles in SLC NAND flash. Also, less cycles are necessary because write amplification from garbage collection does not occur.
+\\
+However, as of 2014, PRAM has not yet been available for consumers and prices have not been comparable. In early 2014, Micron, one of the largest contributors to PRAM research, has taken all information regarding PRAM out of its portfolio --- still, some manufacturers like IBM are researching PRAM.
 
 \subsection{Self-healing NAND Flash Memory}
 \cite{wu2011exploiting}
