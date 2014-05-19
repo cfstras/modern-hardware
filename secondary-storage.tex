@@ -27,9 +27,10 @@
 % For tracking purposes - this is V3.1SP - APRIL 2009
 
 \documentclass{acm_proc_article-sp}
+\usepackage[hyphens]{url}
 
-\usepackage[breaklinks,colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
-%\usepackage{url}
+\usepackage{eurosym}
+%\usepackage[breaklinks,colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
 
 \begin{document}
 
@@ -94,13 +95,6 @@ Claus Strasburger\\
 This report contains a summary of developments in computer secondary storage, particularly in big data server environments. We describe the history of \emph{Hard Drives} and \emph{Solid State Disks} and list tradeoffs and considerations of the currently available options. We present \emph{Phase Change Memory}, a possible alternative for the future of secondary storage, its history and current state of research. We provide a summary of the presented techniques and trends.%% fazit?
 \end{abstract}
 
-
-%%TODO categories!!
-% A category with the (minimum) three required fields
-\category{H.4}{Information Systems Applications}{Miscellaneous}
-%A category including the fourth, optional field follows...
-\category{D.2.8}{Software Engineering}{Metrics}[complexity measures, performance measures]
-
 \section{Introduction}
 When we talk about computer secondary storage, we should briefly explain what computer secondary storage is. As the name suggest there also exists computer primary storage. This part of the memory hierarchy contains the CPU registers, CPU caches (cache levels one to three) and the System DRAM. It is directly accessible by CPU but volatile on power loss. That means that all data are lost if the power supply is interrupted or the computer is shut down. Computer secondary storage is in the memory hierarchy one layer below the System DRAM. It includes flash memory (like SSD, USB flash drives), optical discs (CD-ROM, DVD), magnetic discs (HDD, Floppy) and magnetic tape (Compact Cassette). Secondary storage is also known as external memory and differs from primary storage in that it is not directly accessible by the CPU. The computer usually uses its input/output channels to access secondary storage. It is non-volatile and keeps data on power loss. This report is about hard disk drives and solid state drives only.
 \\
@@ -137,10 +131,10 @@ Current SLC NAND flash cell lifetimes range from hundreds of thousands program/e
 Raw flash memory is prone to random bit errors, because of charge leaking in and out of storage cells. Error correcting codes (\emph{ECC}), as well as error detecting codes (such as Cyclic Redundancy Check, \emph{CRC}) are used to find and possibly correct errors without silently corrupting data.
 
 \subsubsection*{Read Disturb}
-Another phenomenon in NAND flash is called \emph{Read Disturb}. When a cell is accessed many times without being erased, trapped charge can build up in nearby cells, causing them to flip their status if they were uncharged before. %TODO sicher, dass sich etwas aufbaut und nichts abbaut?
-This happens after about one million reads without erase in single level cells and after 100 thousand reads for multi level cells.
+Another phenomenon in NAND flash is called \emph{Read Disturb}. When a cell is accessed many times without being erased, trapped charge can build up in nearby cells, causing them to flip their status if they were uncharged before.
+This happens after about one million reads without erase in single level cells and after 100 thousand reads for multi level cells \cite{cooke2007inconvenient}.
 \\
-To prevent read disturb from corrupting data, SSD controllers keep count of how many times a page was read since the last erase cycle. When a predefined critical read limit is approached, the data is moved or re-programmed.
+To prevent read disturb from corrupting data, SSD controllers keep count of how many times a page was read since the last erase cycle. When a predefined critical read limit is approached, the data is moved or re-programmed. Read disturb happening in spite of this prevention are handled by ECC.
 
 \subsection{Controller Firmware Challenges}
 SSD controllers have to do a lot of bookkeeping to prevent the underlying flash memory from corrupting data or deteriorating. Errors or oversights in controller firmware programming can lead to drastically reduced performance, data loss or silent data corruption.
@@ -149,7 +143,7 @@ SSD controllers have to do a lot of bookkeeping to prevent the underlying flash 
 In order to write data to flash memory, free pages have to be available. SSD controllers use Over-Provisioning (\emph{OP}) to keep the number of unwritten pages high during burst writes, but if more data is to be written than free pages are available, or when invalidated pages need to be reclaimed, garbage collection is necessary. In this process, the controller copies still-valid pages out of blocks containing many invalid pages, only then the whole block can be erased. As the number of invalidated or free pages decreases --- to the operating system these are known as \emph{free} space --- more garbage collection and copying of pages in use has to be done in order to ensure available pages on write requests.
 
 \subsubsection*{Wear Leveling}
-Flash cells degrade when being written. When one section of the disk is written many times, e.g. a swap file or a simple counter, the page containing that section can wear out very quickly -- limiting the amount of overprovisioning or, in worse cases, reducing the effective size of the disk before it is at the end of its life. To prevent this from happening, the controller keeps count on page writes and re-maps heavily written pages to other pages regularly.
+Flash cells degrade when being written. When one section of the disk is written many times, e.g. a swap file or a simple counter, the page containing that section can wear out very quickly --- limiting the amount of overprovisioning or, in worse cases, reducing the effective size of the disk before it is at the end of its life. To prevent this from happening, the controller keeps count on page writes and re-maps heavily written pages to other pages regularly.
 
 \subsubsection*{Write Amplification}
 Summing up these techniques used by the controller, write accesses to the device can lead to more data being written than requested by the operating system. These include garbage collection, wear leveling, and most prominent, small and/or random writes.
@@ -169,7 +163,7 @@ Even though SSDs have no mechanical parts, sequential writes will still be faste
 \\
 To resolve this, the TRIM command has been introduced to the ATA specification to allow the operating system or file system to inform the drive when files are being unlinked. The SSD controller can then reclaim the now free space and use it at will.
 \\
-The lack of TRIM support was an issue when first introducing SSDs, it has however been implemented in all major operating systems since 2011. Still, some combinations of operating and file systems (for example NTFS-3g on Linux or Android before 4.3) might lack TRIM support and therefore cannot take full advantage of SSD speeds.
+The lack of TRIM support was an issue when first introducing SSDs, it has however been implemented in all major operating systems since 2011. Still, some combinations of operating and file systems (for example NTFS-3g on Linux or Android before 4.3 \cite{androidtrim}) might lack TRIM support and therefore cannot take full advantage of SSD speeds.
 
 \section{Parallel access mechanisms}
 
@@ -196,37 +190,8 @@ The lack of TRIM support was an issue when first introducing SSDs, it has howeve
 \cite{chen2013dheating}
 
 \section{Future Trends}
-% also note: PCIe SSDs have no hotswap mechanism! terrible for servers!
-
-
-\balancecolumns
-%% examples begin
-
-\begin{table*}
-\centering
-\caption{Some Typical Commands}
-\begin{tabular}{|c|c|l|} \hline
-Command&A Number&Comments\\ \hline
-\texttt{{\char'134}alignauthor} & 100& Author alignment\\ \hline
-\texttt{{\char'134}numberofauthors}& 200& Author enumeration\\ \hline
-\texttt{{\char'134}table}& 300 & For tables\\ \hline
-\texttt{{\char'134}table*}& 400& For wider tables\\ \hline\end{tabular}
-\end{table*}
-% end the environment with {table*}, NOTE not {table}!
-
-\begin{figure}
-\centering
-\epsfig{file=fly.eps}
-\caption{A sample black and white graphic (.eps format).}
-\end{figure}
-
-\begin{figure}
-\centering
-\epsfig{file=fly.eps, height=1in, width=1in}
-\caption{A sample black and white graphic (.eps format)
-that has been resized with the \texttt{epsfig} command.}
-\end{figure}
-%examples end
+Current SSD prices are still high --- while, as of 2014, 1 TiB of enterprise SSD storage costs around \EUR{1,500} to \EUR{2,000} and a server with 1 TiB of main memory will cost from \EUR{10,000} to \EUR{15,000}, there is also a speed improvement of one order of magnitude in both access time and read/write speed. In a production environment, instead of extending the cache layer hierarchy by an SSD layer, the consideration of increasing main memory first is important, especially in cases where the working set could fit in main memory. It could be stated that maximizing main memory before investing in the necessary software to properly use SSD storage is preferable in most cases.
+%TODO
 
 %
 % The following two commands are all you need in the
