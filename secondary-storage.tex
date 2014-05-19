@@ -37,10 +37,10 @@ Sascha K{\"o}nigsberg, Claus Strasburger\\
 This report contains a summary of developments in computer secondary storage, particularly in big data server environments. We describe the history of \emph{Hard Drives} and \emph{Solid State Disks} and list tradeoffs and considerations of the currently available options. We present \emph{Phase Change Memory}, a possible alternative for the future of secondary storage, its history and current state of research. We provide a summary of the presented techniques and trends.%% fazit?
 \end{abstract}
 
-\category{B.3}{Memory Structures}{General}
 \category{B.3.2}{Memory Structures}{Design Styles}[mass storage, primary memory]
+\category{D.4.2}{Operating Systems}{Storage Management}[secondary storage, storage hierarchies]
 
-\terms{Design, Performance, Reliability}
+\terms{Management, Performance, Reliability}
 
 \section{Introduction}
 When we talk about computer secondary storage, we should briefly explain what secondary storage is. As the name suggests there also exists primary storage in computers. This part of the memory hierarchy contains the CPU registers, CPU caches (cache levels one to three) and the main memory (\emph{DRAM}). It is directly accessible by the CPU but volatile on power loss. This means that all data are lost if the power supply is interrupted or the computer is shut down. Computer secondary storage is in the memory hierarchy one layer below the RAM. It includes flash memory (like SSD, USB flash drives), optical discs (CD-ROM, DVD), magnetic discs (HDD, Floppy) and magnetic tape (Compact Cassette). Secondary storage is also known as external memory and differs from primary storage in that it is not directly accessible by the CPU. The computer usually uses its input/output channels to access secondary storage. It is non-volatile --- it keeps data on power loss. In this report, we focus on hard disk drives and solid state drives.
@@ -49,7 +49,7 @@ Hard disk drives use magnetic coated rotating disks (called \emph{platters}) to 
 \\
 Solid state drives use two key components: The controller and the memory. The controller is an embedded processor and the connection between the host computer and the memory. It executes code on firmware-level and performs many functions necessary for SSD operation. These include Error-correction code (ECC), Wear-leveling, garbage collection and encryption.
 \\
-The controller is very important for the performance of a SSD. For example, if the controller provides multiple channels and can address all of them in parallel, multiple input/output operations can happen simultaneously on different memory chips, dramatically increasing the speed and response time. The memory is of course the location where data are saved on and usually consists of NAND flash , DRAM or a combination of both. NAND is cheaper and non-volatile, but it is slower than DRAM. Most SSDs are used as long-time storages requiring non-volatile memory, which means that most SSDs use NAND flash memory. These memory chips can be organized as Single-level cell (\emph{SLC}) or Multi-level cell (\emph{MLC}). SLC is ten times more persistent and allows three times faster sequential write with nearly the same sequential read performance, but it is 30\% more expensive. The usage of SLC or MLC chips is mostly determined by pricing: Cheap SSDs use MLC chips, while high performance enterprise SSDs use SLC.
+The controller is very important for the performance of a SSD. For example, if the controller provides multiple channels and can address all of them in parallel, multiple input/output operations can happen simultaneously on different memory chips, dramatically increasing the speed and response time. The memory is of course the location where data are saved on and usually consists of NAND flash, DRAM or a combination of both. NAND is cheaper and non-volatile, but it is slower than DRAM. Most SSDs are used as long-time storages requiring non-volatile memory, which means that most SSDs use NAND flash memory. These memory chips can be organized as Single-level cell (\emph{SLC}) or Multi-level cell (\emph{MLC}). SLC is ten times more persistent and allows three times faster sequential write with nearly the same sequential read performance, but it is 30\% more expensive. The usage of SLC or MLC chips is mostly determined by pricing: Cheap SSDs use MLC chips, while high performance enterprise SSDs use SLC.
 
 \section{History of storage drives}
 
@@ -166,14 +166,15 @@ Phase-Change Memory therefore does not have the need for an erase step before wr
 However, as of 2014, PRAM has not yet been available for consumers and prices have not been comparable. In early 2014, Micron, one of the largest contributors to PRAM research, has taken all information regarding PRAM out of its portfolio --- still, some manufacturers like IBM are researching PRAM.
 
 \subsection{Self-healing NAND Flash Memory}
-\cite{wu2011exploiting}
-\cite{chen2013dheating}
+NAND flash cells become useless after many program/erase cycles because of the trapped charge, which means current SSDs do not survive in a server environment for long and must be replaced often. To extend the disk lifetime and reduce the maintaining cost, a process called self-healing through thermal annealing can be used, where trapped charge in flash cells is released by heating the chip to a high temperature ($\sim 200~^{\circ}$C) for half an hour \cite{wu2011exploiting}. After this process, 80\% of the trapped charge is release and the cells can be re-used. This process can be applied approximately 25 times per chip, after that time, the remaining trapped charge will be too high. Overall, using thermal annealing can bring a 6$\times$ improvement in disk lifetime.
+\\
+Thermal annealing has two downsides: Heating consumes a lot of energy, which makes its use limited in mobile devices and might require additional cooling architecture, and it comes at a greater cost. The chips themselves need to be built so that a heater can be placed on or inside of them, making them more expensive, and there need to be backup chips holding the data while other chips are being heated, reducing the total available memory.
 
 \section{Future Trends}
 Current SSD prices are still high --- while, as of 2014, 1 TiB of enterprise SSD storage costs around \EUR{1,500} to \EUR{2,000} and a server with 1 TiB of main memory will cost from \EUR{10,000} to \EUR{15,000}, there is also a speed improvement of one order of magnitude in both access time and read/write speed. In a production environment, instead of extending the cache layer hierarchy by an SSD layer, the consideration of increasing main memory first is important, especially in cases where the working set could fit in main memory. It could be stated that maximizing main memory before investing in the necessary software to properly use SSD storage is preferable in most cases.
 %TODO
 
-
+\section{Conclusion}
 
 \bibliographystyle{abbrv}
 \bibliography{secondary-storage}
