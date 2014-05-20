@@ -20,7 +20,7 @@
 \def\@copyrightspace{\relax}
 \makeatother
 
-%\widowpenalty=1000
+\widowpenalty=1000
 \clubpenalty=1000
 
 \begin{document}
@@ -53,6 +53,7 @@ When we talk about computer secondary storage, we should briefly explain what se
 \\
 Hard disk drives, as schematized in Figure~\ref{fig:hdd}, use magnetic coated rotating disks (called \emph{platters}) to store data. The direction of magnetization represents binary data bits. The actuator head detects and modifies the magnetization. The actuator arm moves to the correct cylinder on the disc and waits for the platter to rotate until the data is below the actuator head.
 
+
 \begin{figure}[ht]
 \centering
 \epsfig{file=hdd-en.eps, width=\columnwidth}
@@ -60,14 +61,11 @@ Hard disk drives, as schematized in Figure~\ref{fig:hdd}, use magnetic coated ro
 \caption{Hard Disk schematic \cite{wikihdd}}
 \label{fig:hdd}
 \end{figure}
-
 Solid state drives use two key components: The controller and the memory. The controller is an embedded processor and connects the host computer with the memory. It executes code on firmware-level and performs many functions necessary for SSD operation. These include generating an Error-correction code (ECC), Wear-leveling, garbage collection and encryption.
 \\
 The controller is important for the performance of a SSD. For example, if the controller provides multiple channels and can address them all in parallel, multiple input/output operations can happen simultaneously on different memory chips, which increases the speed and response time dramatically. The memory is of course the location where data are saved on and usually consists of NAND flash, DRAM or a combination of both. NAND is cheaper and non-volatile but is slower than DRAM. Most SSDs are used as long-time storages requiring non-volatile memory, which means that most SSDs use NAND flash memory. These memory chips can be organized as Single-level cell (\emph{SLC}) or Multi-level cell (\emph{MLC}). SLC is ten times more persistent and allows three times faster sequential write, with nearly the same sequential read performance, but it is 30\% more expensive. The usage of SLC or MLC chips is mostly determined by pricing: Cheap SSDs use MLC chips, while high performance enterprise SSDs use SLC.
-
-\section{History of storage drives}
-
-\begin{table*}[b]
+\\
+\begin{table*}[bh]
 \centering
 \caption{Comparison of SSDs and HDDs}
 \label{table:comparison}
@@ -82,7 +80,7 @@ Write cycles (lifetime)				& 3,000 -- 100,000			& 10 Billion		\\ \hline
 Price								& 500 -- 1000 \euro/TB		& 30 -- 50 \euro/TB	\\
 \end{tabular}
 \end{table*}
-
+\section{History of storage drives}
 \subsection{Hard Disk Drives}
 Hard disk drives are the successor to drum memory. The first HDD was the IBM 350. It had a capacity of 5 MB and was as big as a locker, because the actuator arm was moved electro-pneumatically. It was announced in 1956 and was not sold but rented for 650 dollar a month. Years later, IBM started the Winchester project with the goal to develop a rotating memory with firmly mounted medium. The first HDD of the Winchester project was the IBM 3340 in 1979. The first Winchester drive in 5.25" form factor was the Seagate ST506 (in 1980). This name also became the name of the interface used by the ST506. The ST506-interface established as de-facto-standard.
 %% Kommentar von meinem Vater: "Ich hatte auch einen Winchester drive. Das war ein Knüller!" hrhr
