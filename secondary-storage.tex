@@ -58,7 +58,7 @@ Hard disk drives, as schematized in Figure~\ref{fig:hdd}, use magnetic coated ro
 \centering
 \epsfig{file=hdd-en.eps, width=\columnwidth}
 %\includegraphics[width=\columnwidth]{hdd-en.png}
-\caption{Hard Disk schematic \cite{wikihdd}}
+\caption{Hard Disk schematic~\cite{wikihdd}}
 \label{fig:hdd}
 \end{figure}
 Solid state drives use two key components: The controller and the memory. The controller is an embedded processor and connects the host computer with the memory. It executes code on firmware-level and performs many functions necessary for SSD operation. These include generating an Error-correction code (ECC), Wear-leveling, garbage collection and encryption.
@@ -92,7 +92,7 @@ The first Serial-ATA HDD used Native Command Queueing (\emph{NCQ}) in 2004. NCQ 
 While there were multiple manufacturers on the HDD market for years, today only Seagate, Toshiba and Western Digital produce HDDs.
 
 \subsection{Solid State Disks}
-The origins of SSDs used magnetic core memory and card capacitor read-only store (CCROS) \cite{originssds}. They were built in the 1950s. In the 1970s and 1980s, SSDs were used in supercomputers only. The first flash-based SSD were developed by MSystems in 1995, but they were so expensive that they were only used for military applications and other less price-sensitive sectors. In 1999, BiTMICRO announced the first SSD in the 3.5" form factor. The first SSD for laptops in 2.5" and 1.8" form factors were developed by Samsung in 2006 and were sold for about 600 US-dollar. This was only an eighth of the price of previous SSDs. Although that did not yet mean the breakthrough for SSDs, Samsung could gain 45\% of market share with these models. Only one year later, Fusion-io announced the first PCIe-based SSD which reached 100,000 IOPS (as comparison: current HDDs reach up to 125 IOPS). The second generation of SSDs for consumers were the first generation that used MLC instead of SLC flash memory chips. As we have seen, this decreased the price for SSDs, but the performance was lower than SLC-based SSDs performance. In 2009, SSDs used improved MLC flash memory chips which had even better performance than some SLC chips. The term \emph{Enterprise flash drives} (\emph{EFD}) was introduced in 2008, but it became never a standard, so every SSD-manufacturer use the name EFD for their SSDs \cite{efds}.
+The origins of SSDs used magnetic core memory and card capacitor read-only store (CCROS)~\cite{originssds}. They were built in the 1950s. In the 1970s and 1980s, SSDs were used in supercomputers only. The first flash-based SSD were developed by MSystems in 1995, but they were so expensive that they were only used for military applications and other less price-sensitive sectors. In 1999, BiTMICRO announced the first SSD in the 3.5" form factor. The first SSD for laptops in 2.5" and 1.8" form factors were developed by Samsung in 2006 and were sold for about 600 US-dollar. This was only an eighth of the price of previous SSDs. Although that did not yet mean the breakthrough for SSDs, Samsung could gain 45\% of market share with these models. Only one year later, Fusion-io announced the first PCIe-based SSD which reached 100,000 IOPS (as comparison: current HDDs reach up to 125 IOPS). The second generation of SSDs for consumers were the first generation that used MLC instead of SLC flash memory chips. As we have seen, this decreased the price for SSDs, but the performance was lower than SLC-based SSDs performance. In 2009, SSDs used improved MLC flash memory chips which had even better performance than some SLC chips. The term \emph{Enterprise flash drives} (\emph{EFD}) was introduced in 2008, but it became never a standard, so every SSD-manufacturer use the name EFD for their SSDs~\cite{efds}.
 
 {\tolerance=900
 \section{Advantages and disadvantages of Solid State Disks compared to Hard Disks}
@@ -109,7 +109,7 @@ Solid State Drives pose many difficult challenges to both their manufacturers an
 NAND flash has two major limits: Block erasure and write cycles (\emph{Memory wear}). Other limitations include Bit Corruption and Read Disturb.
 
 \subsubsection*{Block Erasure}
-Because of the higher current which is necessary to release the trapped charge in a flash memory cell compared to charging a cell, deleting information is done in blocks of cells, called \emph{Erase Blocks}. Most current Solid State Disks use blocks of 256 pages or more \cite{codecapsule2014coding}.
+Because of the higher current which is necessary to release the trapped charge in a flash memory cell compared to charging a cell, deleting information is done in blocks of cells, called \emph{Erase Blocks}. Most current Solid State Disks use blocks of 256 pages or more~\cite{codecapsule2014coding}.
 This means that to write to a page which was previously written and subsequently marked as unused, either all pages on the same erase block have to be marked unused also, or pages that are currently in use have to be copied to another block. It is not until this has been done that the block can be erased. This process is called \emph{Garbage Collection}.
 
 \subsubsection*{Limited Write Cycles}
@@ -122,7 +122,7 @@ Because of charge leaking in and out of storage cells, raw flash memory is prone
 
 \subsubsection*{Read Disturb}
 Another phenomenon in NAND flash is called \emph{Read Disturb}. When a cell is accessed many times without being erased, trapped charge can build up in nearby cells, causing them to flip their status if they were uncharged before.
-This happens after about one million reads without erase in single level cells and after 100 thousand reads for multi level cells \cite{cooke2007inconvenient}.
+This happens after about one million reads without erase in single level cells and after 100 thousand reads for multi level cells~\cite{cooke2007inconvenient}.
 \\
 To prevent read disturb from corrupting data, SSD controllers keep count of how many times a page was read since the last erase cycle. When a predefined critical read limit is approached, the data is moved or re-programmed. Read disturb happening in spite of this prevention are handled by ECC.
 
@@ -153,7 +153,7 @@ Even though SSDs have no mechanical parts, sequential writes will still be faste
 \\
 To resolve this the TRIM command has been introduced to the ATA specification to allow the operating system or file system to inform the drive when files are being unlinked. The SSD controller can then reclaim the now free space and use it at will.
 \\
-The lack of TRIM support was an issue when first introducing SSDs; it has however been implemented in all major operating systems since 2011. Still, some combinations of operating and file systems (for example NTFS-3g on Linux or Android before 4.3 \cite{androidtrim}) might lack TRIM support and therefore cannot take full advantage of SSD speeds.
+The lack of TRIM support was an issue when first introducing SSDs; it has however been implemented in all major operating systems since 2011. Still, some combinations of operating and file systems (for example NTFS-3g on Linux or Android before 4.3~\cite{androidtrim}) might lack TRIM support and therefore cannot take full advantage of SSD speeds.
 
 \section{Parallel access mechanisms}
 Block-oriented access of flash memory causes re\-dundant wri\-tes. Redundant writes are bad for SSDs because they lower the overall performance of SSDs and decrease the reliability of flash memory. So mitigation is necessary when using SSDs. In this section we will show some of the techniques used to avoid redundant writes.
@@ -162,17 +162,17 @@ Block-oriented access of flash memory causes re\-dundant wri\-tes. Redundant wri
 This data structure described in a paper by Wu et al.~\cite{wu2007efficient} is an efficient implementation of B-tree index structures over the flash translation layer (\emph{FTL}). It provides file system functions to create and maintain B-tree index structures, which has to be implemented in the file system if desired, because standard flash translation layers do not offer that kind of structure. Because the layer is done directly on the FTL, no modifications to existing application systems are needed. The advantages of using a B-tree layer are reduced overhead of flash memory management, reduced energy dissipation and reduced average response time of record insertions and deletions. Simply stated, B-tree layers improves the overall system performance.
 
 \subsection{Fractal Prefetching B$^{+}$-Trees}
-A Fractal Prefetching B$^{+}$-Tree \cite{chen2002fractal}, as shown in Figure~\ref{fig:b-tree}, is a single index structure that can be viewed at two different chunk sizes: outer chunks are sized to fit disk pages, while inner pages are sized to fit cache lines. This allows cache optimized access at two layers in the memory hierarchy at the same time, leading to an optimization of cache and I/O operations.
+A Fractal Prefetching B$^{+}$-Tree~\cite{chen2002fractal}, as shown in Figure~\ref{fig:b-tree}, is a single index structure that can be viewed at two different chunk sizes: outer chunks are sized to fit disk pages, while inner pages are sized to fit cache lines. This allows cache optimized access at two layers in the memory hierarchy at the same time, leading to an optimization of cache and I/O operations.
 
 \begin{figure}[ht]
 \centering
 \includegraphics[width=\columnwidth]{b-tree.png}
-\caption{Self-similiar \emph{tree within a tree} structure \cite{chen2002fractal}}
+\caption{Self-similiar \emph{tree within a tree} structure~\cite{chen2002fractal}}
 \label{fig:b-tree}
 \end{figure}
 
 \subsection{Flash as Cache Extension (\subsecit{FaCE})}
-FaCE \cite{kang2012flash} utilizes flash memory as an extension to a DRAM buffer for a recoverable database. It caches data pages in flash memory on exit from the DRAM buffer, essentially resulting in a low-overhead cache hierarchy extension. Flash cache is capable of sustaining high hit rates without incurring excessive run-time overheads. In certain situations, this technique can be more cost efficient than increasing the size of DRAM buffers. It also allows a more sustainable I/O performance for higher transaction throughput. Another advantage is the minimized overhead in recovery scenarios and an accelerated system restart after failure.
+FaCE~\cite{kang2012flash} utilizes flash memory as an extension to a DRAM buffer for a recoverable database. It caches data pages in flash memory on exit from the DRAM buffer, essentially resulting in a low-overhead cache hierarchy extension. Flash cache is capable of sustaining high hit rates without incurring excessive run-time overheads. In certain situations, this technique can be more cost efficient than increasing the size of DRAM buffers. It also allows a more sustainable I/O performance for higher transaction throughput. Another advantage is the minimized overhead in recovery scenarios and an accelerated system restart after failure.
 
 \section{Current Research}
 It is to be expected that classic HDDs are quickly approaching the end of their research possibilities. The research of hard disk technology is primarily focused on density increase, which is stagnating since SSDs entered the market and bit sizes are quickly approaching physical limits.
@@ -191,7 +191,7 @@ However, as of 2014, PRAM has not yet been available for consumers and prices ha
 \subsection{Self-healing NAND Flash Memory}
 NAND flash cells become useless after many program/erase cycles because of the trapped charge, which means current SSDs do not survive in a server environment for long and must be replaced often.
 \\
-To extend the disk lifetime and reduce the maintaining costs, a process called self-healing through thermal annealing can be used, where trapped charge in flash cells is released by heating the chip to a high temperature ($\sim 200~^{\circ}$C) for half an hour \cite{wu2011exploiting}. After this process, 80\% of the trapped charge is release and the cells can be re-used. This process can be applied approximately 25 times per chip, after that time, the remaining trapped charge will be too high. Overall, using thermal annealing can bring a 6$\times$ improvement in disk lifetime.
+To extend the disk lifetime and reduce the maintaining costs, a process called self-healing through thermal annealing can be used, where trapped charge in flash cells is released by heating the chip to a high temperature ($\sim 200~^{\circ}$C) for half an hour~\cite{wu2011exploiting}. After this process, 80\% of the trapped charge is release and the cells can be re-used. This process can be applied approximately 25 times per chip, after that time, the remaining trapped charge will be too high. Overall, using thermal annealing can bring a 6$\times$ improvement in disk lifetime.
 \\
 Thermal annealing has two downsides: Heating consumes a lot of energy, which makes its use limited in mobile devices and might require additional cooling architecture, and it comes at a greater cost. The chips themselves need to be built so that a heater can be placed on or inside of them, making them more expensive, and there need to be backup chips holding the data while other chips are being heated, reducing the total available memory.
 
