@@ -119,7 +119,7 @@ However, when erasing it, not all charge is released. Some electrons get trapped
 Current SLC NAND flash cell lifetimes range from hundreds of thousands program/erase (\emph{P/E}) cycles to one million before becoming useless, while multi level or triple level cells have three thousand to ten thousand cycles.
 
 \subsubsection*{Bit Corruption}
-Because of charge leaking in and out of storage cells raw flash memory is prone to random bit errors. Error correcting codes (\emph{ECC}), as well as error detecting codes (such as Cyclic Redundancy Check, \emph{CRC}), are used to find and possibly correct errors without silently corrupting data.
+Because of charge leaking in and out of storage cells, raw flash memory is prone to random bit errors. Error correcting codes (\emph{ECC}), as well as error detecting codes (such as Cyclic Redundancy Check, \emph{CRC}), are used to find and possibly correct errors without silently corrupting data.
 
 \subsubsection*{Read Disturb}
 Another phenomenon in NAND flash is called \emph{Read Disturb}. When a cell is accessed many times without being erased, trapped charge can build up in nearby cells, causing them to flip their status if they were uncharged before.
@@ -137,7 +137,7 @@ To write data to flash memory, free pages have to be available. SSD controllers 
 Flash cells degrade when being written. When one section of the disk is written many times, e.g. a swap file or a simple counter, the page containing that section can wear out rather quickly --- limiting the amount of overprovisioning or, in worse cases, reducing the effective size of the disk before it is at the end of its life. To prevent this from happening the controller keeps count on page writes and re-maps heavily written pages to other pages regularly.
 
 \subsubsection*{Write Amplification}
-Summing up these techniques used by the controller, write accesses to the device can lead to more data being written than requested by the operating system. These techniques include garbage collection, wear leveling, and, most prominent, small and/or random writes.
+Summing up these techniques used by the controller, write accesses to the device can lead to more data being written than requested by the operating system. These techniques include garbage collection, wear leveling, and, most prominent, small and/or f writes.
 Also, in the case of read disturb mitigation, even read accesses can cause writes to the disks.
 In optimal situations write amplification can be a factor of as low as $1.1\times$, while in worst-case conditions it can go up to $10\times$ or $20\times$.
 \\
