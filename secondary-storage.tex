@@ -10,12 +10,17 @@
 \documentclass{acm_proc_article-sp}
 \usepackage[hyphens]{url}
 
+\usepackage{graphicx}
 \usepackage{eurosym}
+\usepackage{stfloats}
 %\usepackage[breaklinks,colorlinks=true,linkcolor=black,urlcolor=black,citecolor=black]{hyperref}
 
 \makeatletter
 \def\@copyrightspace{\relax}
 \makeatother
+
+%\widowpenalty=1000
+\clubpenalty=1000
 
 \begin{document}
 
@@ -45,7 +50,7 @@ This report contains a summary of developments in computer secondary storage, pa
 \section{Introduction}
 When we talk about computer secondary storage, we should briefly explain what secondary storage is. As the name suggests there also exists primary storage in computers. The latter part of the memory hierarchy contains the CPU registers, CPU caches (cache levels one to three) and the main memory (\emph{DRAM}). Main memory is directly accessible by the CPU and volatile, e.g. stored data is not preserved on power loss. This means that all data are lost if the power supply is interrupted or the computer is shut down. Computer secondary storage is in the memory hierarchy one layer below the RAM. It includes flash memory (like SSD, USB flash drives), optical discs (CD-ROM, DVD), magnetic discs (HDD, Floppy) and magnetic tape (Compact Cassette). Secondary storage is also known as external memory and differs from primary storage in that it is not directly accessible by the CPU. The computer usually uses its input/output channels to access secondary storage. It is non-volatile --- it keeps data on power loss. In this report, we focus on hard disk drives and solid state drives.
 \\
-Hard disk drives use magnetic coated rotating disks (called \emph{platters}) to store data. The direction of magnetization represents binary data bits. The actuator head detects and modifies the magnetization. The actuator arm moves to the correct cylinder on the disc and waits for the platter to rotate until the data is below the actuator head. (TODO: MORE EXPLANATION?) 
+Hard disk drives use magnetic coated rotating disks (called \emph{platters}) to store data. The direction of magnetization represents binary data bits. The actuator head detects and modifies the magnetization. The actuator arm moves to the correct cylinder on the disc and waits for the platter to rotate until the data is below the actuator head.
 \\
 Solid state drives use two key components: The controller and the memory. The controller is an embedded processor and connects the host computer with the memory. It executes code on firmware-level and performs many functions necessary for SSD operation. These include generating an Error-correction code (ECC), Wear-leveling, garbage collection and encryption.
 \\
@@ -53,8 +58,7 @@ The controller is important for the performance of a SSD. For example, if the co
 
 \section{History of storage drives}
 
-
-\begin{table*}[bt]
+\begin{table*}[b]
 \centering
 \caption{Comparison of SSDs and HDDs}
 \begin{tabular}{r|cc}
@@ -69,7 +73,6 @@ Price								& 500 -- 1000 \euro/TB		& 30 -- 50 \euro/TB	\\
 \end{tabular}
 \end{table*}
 
-
 \subsection{Hard Disk Drives}
 Hard disk drives are the successor to drum memory. The first HDD was the IBM 350. It had a capacity of 5 MB and was as big as a locker, because the actuator arm was moved electro-pneumatically. It was announced in 1956 and was not sold but rented for 650 dollar a month. Years later, IBM started the Winchester project with the goal to develop a rotating memory with firmly mounted medium. The first HDD of the Winchester project was the IBM 3340 in 1979. The first Winchester drive in 5.25" form factor was the Seagate ST506 (in 1980). This name also became the name of the interface used by the ST506. The ST506-interface established as de-facto-standard.
 %% Kommentar von meinem Vater: "Ich hatte auch einen Winchester drive. Das war ein Knüller!" hrhr
@@ -78,7 +81,7 @@ In 1986, SCSI was specified, one of the first official HDD protocols. Three year
 \\
 The first Serial-ATA HDD used Native Command Queueing (\emph{NCQ}) in 2004. NCQ is a technology to reorder the input/output operations and improve performance. The first prototype of 2.5" Hybrid-HDD (\emph{H-HDD}) included NAND flash memory and was announced in 2005. The flash memory was used as cache to enhance the speed and the response time of the HDD. The 1 terabyte limit was reached by Hitachi in 2007, the 2 TB and 3 TB limit by Western Digital in 2009/2010. Important form factors of HDD are 5.25.", 3.5", 2.5" (used in laptops) and 1.8" (also used in laptops and some mobile media players, such as the Apple iPod). Important internal interfaces are ATA (IDE), ESDI, SCSI, S-ATA, Serial Attached SCSI (\emph{SAS}) and ST506 (important external interfaces: FireWire, USB and eSATA).
 \\
-While  there were multiple manufacturers on the HDD market for years, today only Seagate, Toshiba and Western Digital produce HDDs.
+While there were multiple manufacturers on the HDD market for years, today only Seagate, Toshiba and Western Digital produce HDDs.
 
 \subsection{Solid State Disks}
 The origins of SSDs used magnetic core memory and card capacitor read-only store (CCROS). They were built in the 1950s. In the 1970s and 1980s, SSDs were used in supercomputers only. The first flash-based SSD were developed by MSystems in 1995, but they were so expensive that they were only used for military applications and other less price-sensitive sectors. In 1999, BiTMICRO announced the first SSD in the 3.5" form factor. The first SSD for laptops in 2.5" and 1.8" form factors were developed by Samsung in 2006 and were sold for about 600 US-dollar. This was only an eighth of the price of previous SSDs. Although that did not yet mean the breakthrough for SSDs, Samsung could gain 45\% of market share with these models. Only one year later, Fusion-io announced the first PCIe-based SSD which reached 100,000 IOPS (as comparison: current HDDs reach up to 125 IOPS). The second generation of SSDs for consumers were the first generation that used MLC instead of SLC flash memory chips. As we have seen, this decreased the price for SSDs, but the performance was lower than SLC-based SSDs performance. In 2009, SSDs used improved MLC flash memory chips which had even better performance than some SLC chips. The term \emph{Enterprise flash drives} (\emph{EFD}) was introduced in 2008, but it became never a standard, so every SSD-manufacturer use the name EFD for their SSDs.
@@ -88,7 +91,7 @@ The origins of SSDs used magnetic core memory and card capacitor read-only store
 }
 As displayed in Table 1, SSDs have very low access time, high data transfer rate and high number of I/O operations per second (\emph{IOPS}). Because there are no moving parts, an SSD is completely silent and very robust. This includes properties like shock resistance, temperature tolerance, dimensions, weight, etc. and leads to a very good usability in mobile computers and more reliability in a server environment, since rack mounts are prone to vibration. As we have seen when talking about SSD controllers, the speed can increase with a higher rate of parallelizability. The speed of SSDs can be so high that even the newest and most advanced interfaces for SSDs and HDDs are too slow. So modern SSDs use interfaces like \emph{mSATA}, \emph{PCI-Express} and \emph{FibreChannel}. Because of the small dimensions new form factory like \emph{mSATA}, \emph{PCIe Mini Card} and \emph{M.2} were developed too.
 \\
-But there are also some negative points about SSDs. SSDs are expensive; especially in terms of price per TB, when compared to HDDs. Another problem is the limited time of write cycles for every NAND-cell. We will later show the disadvantages of Write Amplification and its complex countermeasures.
+But there are also some negative points about SSDs. SSDs are expensive; especially in terms of price per TB, when compared to HDDs. Another problem is the limited time of write cycles for every NAND-cell. We will later show the disadvantages of write amplification and its complex countermeasures.
 
 \section{SSD challenges}
 Solid State Drives pose many difficult challenges to both their manufacturers and users. Despite the superior theoretical access time and read/write bandwidth of NAND flash, the inherent limitations of NAND flash memory make development and use of SSD difficult and completely different to regular hard disk drives.
@@ -134,7 +137,7 @@ Some manufacturers decrease this benchmark value by compressing and deduplicatin
 Even though SSD manufacturers go to great lengths to ensure optimal performance and data integrity, system architects and developers still need to take specific precautions when building software or systems using SSDs. Blindly following current usage patterns established for rotating media will lead to bad performance --- possibly lower than with hard drives --- and sudden performance drop or high device failure rate.
 
 \subsubsection*{Random Writes}
-Even though SSDs have no mechanical parts, sequential writes will still be faster than small writes. Applications have to be careful to try and write in as big blocks as possible, since the smallest written unit will always be the page size (currently 8 to 16 KiB). Small, random writes, such as those produced by a conventional Relational Database Management System (\emph{RDBMS}) like PostgreSQL or MySQL, will cause rapid allocation of many pages, which then need to be garbage collected. As soon as the SSD controller runs out of overprovisioned pages, garbage collection will be necessary and drastically slow down the device. The effective Write Amplification will be very high (depending on the write sizes and their ratio to the page and block sizes), also leading to faster memory degradation and therefore a high disk failure rate.
+Even though SSDs have no mechanical parts, sequential writes will still be faster than small writes. Applications have to be careful to try and write in as big blocks as possible, since the smallest written unit will always be the page size (currently 8 to 16 KiB). Small, random writes, such as those produced by a conventional Relational Database Management System (\emph{RDBMS}) like PostgreSQL or MySQL, will cause rapid allocation of many pages, which then need to be garbage collected. As soon as the SSD controller runs out of overprovisioned pages, garbage collection will be necessary and drastically slow down the device. The effective write amplification will be very high (depending on the write sizes and their ratio to the page and block sizes), also leading to faster memory degradation and therefore a high disk failure rate.
 
 \subsubsection*{TRIM}
 \emph{TRIM} is an ATA command used to mark unused pages. Conventional spinning hard drives have no and need no concept of used or unused storage, since all they do is write and read. With SSDs, the controller needs to know what data are actually valid, otherwise it will do bookkeeping for data no longer referenced by the file system. Also, this storage space cannot be used by the controller to perform garbage collection, wear leveling or other optimization techniques and consequently slows down operation.
@@ -144,21 +147,29 @@ To resolve this, the TRIM command has been introduced to the ATA specification t
 The lack of TRIM support was an issue when first introducing SSDs; it has however been implemented in all major operating systems since 2011. Still, some combinations of operating and file systems (for example NTFS-3g on Linux or Android before 4.3 \cite{androidtrim}) might lack TRIM support and therefore cannot take full advantage of SSD speeds.
 
 \section{Parallel access mechanisms}
-Block-oriented access of flash memory causes redundant writes. Redundant writes are bad for SSDs because they lower the overall performance of SSDs and decrease the reliability of flash memory. So mitigation is necessary when using SSDs. In this section we will show some of the techniques used to avoid redundant writes.
+Block-oriented access of flash memory causes re\-dundant wri\-tes. Redundant writes are bad for SSDs because they lower the overall performance of SSDs and decrease the reliability of flash memory. So mitigation is necessary when using SSDs. In this section we will show some of the techniques used to avoid redundant writes.
 
 \subsection{B-Tree Layer for Flash Memory Storage Systems}
-This data structure described in a paper by Wu et al.~\cite{wu2007efficient} is an efficient implementation of B-tree index structures over the flash translation layer (\emph{FTL}) and provides file systems functions to create and maintain B-tree index structures. Because the layer is done directly on the FTL, no modifications to existing application systems are needed. The advantages of using a B-tree layer are reduced overhead of flash memory management, reduced energy dissipation and reduced average response time of record insertions and deletions. Simply stated, B-tree layers improves the overall system performance. %TODO: Check for plagiarism problems
+This data structure described in a paper by Wu et al.~\cite{wu2007efficient} is an efficient implementation of B-tree index structures over the flash translation layer (\emph{FTL}). It provides file system functions to create and maintain B-tree index structures, which has to be implemented in the file system if desired, because standard flash translation layers do not offer that kind of structure. Because the layer is done directly on the FTL, no modifications to existing application systems are needed. The advantages of using a B-tree layer are reduced overhead of flash memory management, reduced energy dissipation and reduced average response time of record insertions and deletions. Simply stated, B-tree layers improves the overall system performance.
 
 \subsection{Fractal Prefetching B$^{+}$-Trees}
-A Fractal Prefetching B$^{+}$-Tree \cite{chen2002fractal} is a single index structure that can be viewed at two different granularities: at a coarse granularity it contains disk-optimized nodes that are roughly the size of a disk page, and at a fine granularity it contains cache-optimized nodes that are roughly the size of a cache line. This leads to an optimization of cache and I/O operations. %TODO: Check for plagiarism problems and go deeper in detail
+A Fractal Prefetching B$^{+}$-Tree \cite{chen2002fractal} is a single index structure that can be viewed at two different chunk sizes: outer chunks are sized to fit disk pages, while inner pages are sized to fit cache lines. This allows cache optimized access at two layers in the memory hierarchy at the same time, leading to an optimization of cache and I/O operations.
 
-\subsection{?} % microsoft case study?
-%TODO: Sollen wir das aufnehmen oder weglassen?
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{b-tree.png}
+\caption{Self-similiar \emph{tree within a tree} structure \cite{chen2002fractal}}
+\end{figure}
 
 \subsection{Flash as Cache Extension (\subsecit{FaCE})}
 FaCE \cite{kang2012flash} utilizes flash memory as an extension to a DRAM buffer for a recoverable database. It caches data pages in flash memory on exit from the DRAM buffer, essentially resulting in a low-overhead cache hierarchy extension. Flash cache is capable of sustaining high hit rates without incurring excessive run-time overheads. In certain situations, this technique can be more cost efficient than increasing the size of DRAM buffers. It also allows a more sustainable I/O performance for higher transaction throughput. Another advantage is the minimized overhead in recovery scenarios and an accelerated system restart after failure. %TODO: Check for plagiarism problems
 
 \section{Current Research}
+It is to be expected that classic HDDs are quickly approaching the end of their research possibilities. The research of hard disk technology is primarily focused on density increase, which is stagnating since SSDs entered the market and bit sizes are quickly approaching physical limits.
+\\
+SSD and in general solid state technologies are still young and provide high potential for improvements and innovations.
+\\
+In the following section we present two major advances in non-volatile memory technology emerging in the latest years.
 
 \subsection{Phase Change Memory}
 Phase-change memory (\emph{PRAM}) is a non-volatile type of memory which uses the unique chemical behaviour of chalcogenide glass: by applying a voltage to amorphous chalcogenide glass; heating up to the crystallization temperature for around 100 ns, the glass crystallizes. In this form, the resistance over the material is much lower. By heating it to a temperature above the crystallization temperature for 50 ns and instantly letting it cool, it returns back to the amorphous state with higher resistance.
