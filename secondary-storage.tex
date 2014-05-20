@@ -114,7 +114,7 @@ Because of the higher current which is necessary to release the trapped charge i
 This means that to write to a page which was previously written and subsequently marked as unused, either all pages on the same erase block have to be marked unused also, or pages that are currently in use have to be copied to another block. It is not until this has been done that the block can be erased. This process is called \emph{Garbage Collection}.
 
 \subsubsection*{Limited Write Cycles}
-When writing to a flash cell, charge is captured in it, similiar to a capacitor. %TODO similiar? the same? hmm.
+When writing to a flash cell, charge is captured in it, similar to a capacitor.
 However, when erasing it, not all charge is released. Some electrons get trapped in the gate, building up charge until the potential of an uncharged cell is indistinguishable from that of a charged cell. This phenomenon is known as \emph{Memory wear} occurs earlier in multi level cells than in single level cells, since the voltage differences between levels are smaller and the cell is unusable as soon as the trapped charge approaches the difference between two levels.
 Current SLC NAND flash cell lifetimes range from hundreds of thousands program/erase (\emph{P/E}) cycles to one million before becoming useless, while multi level or triple level cells have three thousand to ten thousand cycles.
 
@@ -173,7 +173,7 @@ A Fractal Prefetching B$^{+}$-Tree \cite{chen2002fractal}, as shown in Figure~\r
 \end{figure}
 
 \subsection{Flash as Cache Extension (\subsecit{FaCE})}
-FaCE \cite{kang2012flash} utilizes flash memory as an extension to a DRAM buffer for a recoverable database. It caches data pages in flash memory on exit from the DRAM buffer, essentially resulting in a low-overhead cache hierarchy extension. Flash cache is capable of sustaining high hit rates without incurring excessive run-time overheads. In certain situations, this technique can be more cost efficient than increasing the size of DRAM buffers. It also allows a more sustainable I/O performance for higher transaction throughput. Another advantage is the minimized overhead in recovery scenarios and an accelerated system restart after failure. %TODO: Check for plagiarism problems
+FaCE \cite{kang2012flash} utilizes flash memory as an extension to a DRAM buffer for a recoverable database. It caches data pages in flash memory on exit from the DRAM buffer, essentially resulting in a low-overhead cache hierarchy extension. Flash cache is capable of sustaining high hit rates without incurring excessive run-time overheads. In certain situations, this technique can be more cost efficient than increasing the size of DRAM buffers. It also allows a more sustainable I/O performance for higher transaction throughput. Another advantage is the minimized overhead in recovery scenarios and an accelerated system restart after failure.
 
 \section{Current Research}
 It is to be expected that classic HDDs are quickly approaching the end of their research possibilities. The research of hard disk technology is primarily focused on density increase, which is stagnating since SSDs entered the market and bit sizes are quickly approaching physical limits.
@@ -198,7 +198,6 @@ Thermal annealing has two downsides: Heating consumes a lot of energy, which mak
 
 \section{Future Trends}
 Current SSD prices are still high --- while, as of 2014, 1 TiB of enterprise SSD storage costs around \EUR{1,500} to \EUR{2,000} and a server with 1 TiB of main memory will cost from \EUR{10,000} to \EUR{15,000}, there is also a speed improvement of one order of magnitude in both access time and read/write speed. In a production environment, instead of extending the cache layer hierarchy by an SSD layer, the consideration of increasing main memory first is important, especially in cases where the working set could fit in main memory. In our opinion, maximizing main memory before investing in the necessary software to properly use SSD storage is preferable in most cases.
-%TODO
 
 \section{Conclusion}
 We have provided an overview of computer secondary storage, comparing hard disk drives and solid state drives and displaying the advantages and disadvantages of using SSD storage in server environments.
